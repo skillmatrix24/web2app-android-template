@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
 
     companion object {
-        const val WEBSITE_URL = "Thegingerleaf.com"
+        const val WEBSITE_URL = "__WEBSITE_URL__"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
