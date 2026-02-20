@@ -1,0 +1,51 @@
+timeout: 1200s
+
+substitutions:
+  _USER_ID: ""
+  _APP_ID: ""
+  _WEBSITE_URL: ""
+  _APP_NAME: ""
+  _PACKAGE_NAME: ""
+
+steps:
+
+# 1️⃣ Update Firestore → compiling
+- name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      echo "Compiling started"
+      gcloud firestore documents update \
+      users/${_USER_ID}/appGenerationRequests/${_APP_ID} \
+      --update-fields=status=compiling
+
+# 2️⃣ Inject values
+- name: "gcr.io/cloud-builders/bash"
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      echo "Website: ${_WEBSITE_URL}"
+      echo "App Name: ${_APP_NAME}"
+      echo "Package: ${_PACKAGE_NAME}"
+
+# 3️⃣ Dummy build step (Replace with Gradle later)
+- name: "gcr.io/cloud-builders/bash"
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      echo "Simulating build for ${_APP_NAME}"
+      sleep 5
+
+# 4️⃣ Update Firestore → ready
+- name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      echo "Build completed"
+      gcloud firestore documents update \
+      users/${_USER_ID}/appGenerationRequests/${_APP_ID} \
+      --update-fields=status=ready
