@@ -3,6 +3,5 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/web2app-android-template" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/web2app-android-template/web2app-android-template" vcs="Git" />
   </component>
 </project>
