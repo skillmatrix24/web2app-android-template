@@ -17,26 +17,31 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    // 🔐 Signing Configuration
+    // 🔐 Signing Configuration (Cloud Build Compatible)
+
     signingConfigs {
         create("release") {
-            storeFile = file("release-key.jks")   // make sure file exists in app folder
-            storePassword = "Janhavi@2908"
-            keyAlias = "key0"
-            keyPassword = "Janhavi@2908"
+            storeFile = file("web2app-master.keystore")
+            storePassword = System.getenv("STORE_PASS")
+            keyAlias = System.getenv("KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASS")
         }
     }
 
     buildTypes {
-        release {
+
+        getByName("release") {
             isMinifyEnabled = false
+            isDebuggable = false
             signingConfig = signingConfigs.getByName("release")
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
-        debug {
+
+        getByName("debug") {
             isMinifyEnabled = false
         }
     }
@@ -48,6 +53,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "11"
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 
